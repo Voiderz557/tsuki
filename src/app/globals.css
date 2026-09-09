@@ -1,26 +1,266 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   TSUKI Design Tokens
+   "Stories are stars." — Japanese night sky, dark & elegant.
+   ============================================================ */
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-foreground-secondary: var(--foreground-secondary);
+
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-playfair);
+  --font-heading: var(--font-playfair);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* TSUKI brand extras */
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-sunset: var(--sunset);
+  --color-gold: var(--gold);
+  --color-moonlight: var(--moonlight);
+  --color-steel: var(--steel);
+  --color-border-strong: var(--border-strong);
+  --color-border-accent: var(--border-accent);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Backgrounds */
+  --background: #080c18;
+  --surface: #0d1324;
+  --card: #11182a;
+  --surface-elevated: #151d32;
+  --popover: #151d32;
+
+  /* Text */
+  --foreground: #f4f6ff;
+  --foreground-secondary: #aab2cc;
+  --muted-foreground: #707a99;
+  --card-foreground: #f4f6ff;
+  --popover-foreground: #f4f6ff;
+
+  /* Accents */
+  --primary: #7c83ff;
+  --primary-foreground: #f4f6ff;
+  --accent: #a78bfa;
+  --accent-foreground: #f4f6ff;
+  --secondary: #151d32;
+  --secondary-foreground: #f4f6ff;
+  --muted: #0d1324;
+
+  /* Brand extras */
+  --sunset: #e89ab8;
+  --gold: #f4b87a;
+  --moonlight: #dde7ff;
+  --steel: #6478a8;
+
+  /* Feedback */
+  --destructive: #e5657a;
+
+  /* Borders / rings */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.13);
+  --border-accent: rgba(124, 131, 255, 0.35);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: rgba(124, 131, 255, 0.5);
+
+  --chart-1: #7c83ff;
+  --chart-2: #a78bfa;
+  --chart-3: #e89ab8;
+  --chart-4: #f4b87a;
+  --chart-5: #6478a8;
+
+  --radius: 0.625rem;
+
+  --sidebar: #0d1324;
+  --sidebar-foreground: #f4f6ff;
+  --sidebar-primary: #7c83ff;
+  --sidebar-primary-foreground: #f4f6ff;
+  --sidebar-accent: #151d32;
+  --sidebar-accent-foreground: #f4f6ff;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: rgba(124, 131, 255, 0.5);
+}
+
+/* TSUKI is a dark-first product — mirror the same palette under .dark so
+   any dark: prefixed utility in shared UI primitives stays consistent. */
+.dark {
+  --background: #080c18;
+  --surface: #0d1324;
+  --card: #11182a;
+  --surface-elevated: #151d32;
+  --popover: #151d32;
+  --foreground: #f4f6ff;
+  --foreground-secondary: #aab2cc;
+  --muted-foreground: #707a99;
+  --card-foreground: #f4f6ff;
+  --popover-foreground: #f4f6ff;
+  --primary: #7c83ff;
+  --primary-foreground: #f4f6ff;
+  --accent: #a78bfa;
+  --accent-foreground: #f4f6ff;
+  --secondary: #151d32;
+  --secondary-foreground: #f4f6ff;
+  --muted: #0d1324;
+  --sunset: #e89ab8;
+  --gold: #f4b87a;
+  --moonlight: #dde7ff;
+  --steel: #6478a8;
+  --destructive: #e5657a;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.13);
+  --border-accent: rgba(124, 131, 255, 0.35);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: rgba(124, 131, 255, 0.5);
+  --chart-1: #7c83ff;
+  --chart-2: #a78bfa;
+  --chart-3: #e89ab8;
+  --chart-4: #f4b87a;
+  --chart-5: #6478a8;
+  --sidebar: #0d1324;
+  --sidebar-foreground: #f4f6ff;
+  --sidebar-primary: #7c83ff;
+  --sidebar-primary-foreground: #f4f6ff;
+  --sidebar-accent: #151d32;
+  --sidebar-accent-foreground: #f4f6ff;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: rgba(124, 131, 255, 0.5);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================================
+   TSUKI component utilities
+   ============================================================ */
+
+@layer components {
+  /* Standard content container width (Section 60) */
+  .tsuki-container {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .tsuki-container {
+      padding-inline: 32px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .tsuki-container {
+      padding-inline: 48px;
+    }
+  }
+
+  /* Standard card surface (Section 8) */
+  .tsuki-card {
+    background-color: rgba(17, 24, 42, 0.92);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    transition:
+      transform 200ms ease,
+      border-color 200ms ease,
+      box-shadow 200ms ease;
+  }
+
+  .tsuki-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-accent);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.32);
+  }
+
+  /* Primary gradient button (Section 9) */
+  .tsuki-btn-gradient {
+    background-image: linear-gradient(135deg, #786eff, #b57edc);
+  }
+
+  .tsuki-btn-gradient:hover {
+    background-image: linear-gradient(135deg, #857aff, #c290e3);
+  }
+
+  /* Focus ring for inputs (Section 10) */
+  .tsuki-focus-ring:focus-visible {
+    box-shadow: 0 0 0 3px rgba(124, 131, 255, 0.15);
+  }
+
+  /* Muted section label, e.g. "SOME STORIES STAY WITH US" */
+  .tsuki-eyebrow {
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: var(--foreground-secondary);
+  }
+
+  .tsuki-wordmark {
+    letter-spacing: 0.12em;
+    font-weight: 600;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
