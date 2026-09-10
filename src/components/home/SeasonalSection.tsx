@@ -13,11 +13,15 @@ export function SeasonalSection({ anime, seasonLabel }: { anime: AnimeSummary[];
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-        {anime.map((item) => (
-          <AnimeCard key={item.id} anime={item} showGenres />
-        ))}
-      </div>
+      {anime.length > 0 ? (
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          {anime.map((item) => (
+            <AnimeCard key={item.id} anime={item} showGenres />
+          ))}
+        </div>
+      ) : (
+        <p className="text-sm text-muted-foreground">No seasonal anime found for this season.</p>
+      )}
     </section>
   );
 }

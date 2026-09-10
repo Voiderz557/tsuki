@@ -1,10 +1,15 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 
+import { useGlobalSearch } from "@/components/search/GlobalSearch";
+
 export function Hero() {
+  const router = useRouter();
+  const { setOpen: setSearchOpen } = useGlobalSearch();
   const sectionRef = useRef<HTMLDivElement>(null);
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
@@ -128,14 +133,29 @@ export function Hero() {
             Track, discover and share the anime and manga that stay with you.
           </p>
 
-          <div className="tsuki-focus-ring mt-8 flex items-center gap-3 rounded-xl border border-border bg-[rgba(13,19,36,0.85)] px-4 py-3 backdrop-blur-sm transition-colors focus-within:border-border-accent">
-            <Search className="size-5 text-muted-foreground" />
+          <form
+            className="tsuki-focus-ring mt-8 flex items-center gap-3 rounded-xl border border-border bg-[rgba(13,19,36,0.85)] px-4 py-3 backdrop-blur-sm transition-colors focus-within:border-border-accent"
+            onSubmit={(event: FormEvent<HTMLFormElement>) => {
+              event.preventDefault();
+              const value = new FormData(event.currentTarget).get("q");
+              const query = typeof value === "string" ? value.trim() : "";
+              if (query) {
+                router.push(`/search?q=${encodeURIComponent(query)}`);
+              } else {
+                setSearchOpen(true);
+              }
+            }}
+          >
+            <Search className="size-5 text-muted-foreground" aria-hidden="true" />
             <input
-              type="text"
+              type="search"
+              name="q"
               placeholder="Search anime, manga, characters…"
               className="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+              aria-label="Search anime, manga, characters"
+              onFocus={() => setSearchOpen(true)}
             />
-          </div>
+          </form>
         </div>
       </div>
     </section>

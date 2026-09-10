@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { Plus } from "lucide-react";
 
 import type { ContinueWatchingEntry } from "@/types/anime";
@@ -29,16 +28,15 @@ export function ContinueWatching({ entries }: { entries: ContinueWatchingEntry[]
 
           return (
             <div key={entry.anime.id} className="tsuki-card min-w-[260px] shrink-0 overflow-hidden md:min-w-0">
-              <Link href={`/anime/${entry.anime.id}`} className="block">
-                <div className="relative aspect-[16/9] w-full overflow-hidden">
-                  <PosterPlaceholder glyph={entry.anime.posterGlyph} seed={entry.anime.id} className="h-full w-full" />
-                </div>
-              </Link>
+              {/* Demo data isn't backed by a real AniList id yet (Milestone 3
+                  wires up real list persistence), so this card intentionally
+                  doesn't deep-link to /anime/[id]. */}
+              <div className="relative aspect-[16/9] w-full overflow-hidden">
+                <PosterPlaceholder glyph={entry.anime.posterGlyph} seed={entry.anime.id} className="h-full w-full" />
+              </div>
 
               <div className="space-y-2.5 p-3.5">
-                <Link href={`/anime/${entry.anime.id}`} className="line-clamp-1 text-sm font-medium text-foreground hover:text-primary">
-                  {title}
-                </Link>
+                <p className="line-clamp-1 text-sm font-medium text-foreground">{title}</p>
 
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <span>
@@ -69,9 +67,6 @@ export function ContinueWatching({ entries }: { entries: ContinueWatchingEntry[]
                     }
                   >
                     <Plus className="size-3.5" /> Episode
-                  </Button>
-                  <Button asChild size="sm" variant="ghost">
-                    <Link href={`/anime/${entry.anime.id}`}>Details</Link>
                   </Button>
                 </div>
               </div>

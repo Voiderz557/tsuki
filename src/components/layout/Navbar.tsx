@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { useGlobalSearch } from "@/components/search/GlobalSearch";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -18,6 +19,7 @@ const NAV_LINKS = [
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const { setOpen: setSearchOpen } = useGlobalSearch();
 
   useEffect(() => {
     function onScroll() {
@@ -58,8 +60,9 @@ export function Navbar() {
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             type="button"
+            onClick={() => setSearchOpen(true)}
             className="tsuki-focus-ring hidden items-center gap-2 rounded-lg border border-border bg-background/40 px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground-secondary sm:flex"
-            aria-label="Search anime, manga, characters"
+            aria-label="Search anime and manga"
           >
             <Search className="size-4" />
             <span>Search…</span>
@@ -68,8 +71,9 @@ export function Navbar() {
 
           <button
             type="button"
+            onClick={() => setSearchOpen(true)}
             className="tsuki-focus-ring flex size-9 items-center justify-center rounded-lg text-foreground-secondary hover:text-foreground sm:hidden"
-            aria-label="Search"
+            aria-label="Search anime and manga"
           >
             <Search className="size-5" />
           </button>

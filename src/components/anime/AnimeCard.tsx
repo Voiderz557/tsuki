@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { Star } from "lucide-react";
 
@@ -14,14 +16,26 @@ export interface AnimeCardProps {
   /** Controls how much metadata is shown below the poster. */
   variant?: "default" | "compact";
   showGenres?: boolean;
+  /** Image sizes hint — tune per grid density to avoid over-fetching. */
+  sizes?: string;
+  priority?: boolean;
   className?: string;
 }
 
-export function AnimeCard({ anime, variant = "default", showGenres = false, className }: AnimeCardProps) {
+export function AnimeCard({
+  anime,
+  variant = "default",
+  showGenres = false,
+  sizes = "(min-width: 1280px) 15vw, (min-width: 768px) 22vw, 42vw",
+  priority = false,
+  className,
+}: AnimeCardProps) {
+  const [imageFailed, setImageFailed] = useState(false);
   const title = displayTitle(anime.title);
   const score = formatScore(anime.averageScore);
   const formatLabel = formatFormatLabel(anime.format);
   const episodeLabel = formatEpisodeCount(anime.episodes);
+  const showImage = Boolean(anime.coverImage) && !imageFailed;
 
   return (
     <Link
@@ -40,7 +54,19 @@ export function AnimeCard({ anime, variant = "default", showGenres = false, clas
             whileHover={{ scale: 1.03 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
-            <PosterPlaceholder glyph={anime.posterGlyph} seed={anime.id} className="h-full w-full" />
+            {showImage ? (
+              <Image
+                src={anime.coverImage as string}
+                alt={title}
+                fill
+                sizes={sizes}
+                priority={priority}
+                className="object-cover"
+                onError={() => setImageFailed(true)}
+              />
+            ) : (
+              <PosterPlaceholder glyph={anime.posterGlyph} seed={anime.id} className="h-full w-full" />
+            )}
           </motion.div>
 
           {score && (

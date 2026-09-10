@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Footer } from "@/components/layout/Footer";
 import { ConstellationBackground } from "@/components/effects/ConstellationBackground";
+import { SearchProvider } from "@/components/search/GlobalSearch";
 
 import "./globals.css";
 
@@ -39,12 +40,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="relative flex min-h-full flex-col bg-background text-foreground">
         <ConstellationBackground className="pointer-events-none fixed inset-0 z-0 h-full w-full" />
-        <Navbar />
-        <main className="relative z-10 flex-1 pt-16 pb-20 md:pt-[72px] md:pb-0">{children}</main>
-        <div className="relative z-10">
-          <Footer />
-        </div>
-        <MobileNav />
+        <SearchProvider>
+          <Navbar />
+          <main className="relative z-10 flex-1 pt-16 pb-20 md:pt-[72px] md:pb-0">{children}</main>
+          <div className="relative z-10">
+            <Footer />
+          </div>
+          <MobileNav />
+        </SearchProvider>
       </body>
     </html>
   );
